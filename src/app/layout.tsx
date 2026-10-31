@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/outfit";
+import "@fontsource-variable/space-grotesk";
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
 import "./globals.css";
 import { ShopProvider } from "@/components/shop-provider";
 import { Header, Footer } from "@/components/header";
@@ -21,8 +24,10 @@ export default function RootLayout({
       <body>
         <ShopProvider>
           <Header />
-          {children}
-          <Footer />
+          <div className="app-shell">
+            {children}
+            <Footer />
+          </div>
         </ShopProvider>
       </body>
     </html>

@@ -4,13 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowUpRight,
-  Heart,
+  Bookmark as Heart,
   Search,
   SlidersHorizontal,
   ArrowRight,
   Truck,
   PackageCheck,
-  Plus,
+  ArrowDownRight,
+  ScanLine,
+  Command,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -28,7 +30,7 @@ export function ProductCard({ product: p }: { product: Product }) {
             src={p.image}
             alt={p.name}
             fill
-            sizes="(max-width: 640px) 90vw, 33vw"
+            sizes="(max-width: 700px) 90vw, 35vw"
           />
         </Link>
         <Button
@@ -52,7 +54,10 @@ export function ProductCard({ product: p }: { product: Product }) {
       </div>
       <div className="product-meta">
         <span>{p.variants.length} options</span>
-        <strong>From {money(p.variants[0].price)}</strong>
+        <strong>
+          {money(p.variants[0].price)}
+          <small> starting price</small>
+        </strong>
       </div>
     </article>
   );
@@ -91,18 +96,14 @@ export function Catalogue({
       <div className="section-heading">
         <div>
           <span className="eyebrow">
-            {onlySaved ? "YOUR PERSONAL EDIT" : "THE EVERYDAY COLLECTION"}
+            {onlySaved ? "SAVED OBJECTS" : "THE SUPPLY INDEX"}
           </span>
-          <h2>
-            {onlySaved
-              ? "Good things, kept close."
-              : "Small upgrades. Better days."}
-          </h2>
+          <h2>{onlySaved ? "Your shortlist." : "Choose your tools."}</h2>
         </div>
         <p>
           {onlySaved
-            ? "Your saved products stay here for next time."
-            : "Useful by design. A joy to use."}
+            ? "Saved in your browser. Ready when you are."
+            : "Six objects. One better workspace."}
         </p>
       </div>
       <div className="filters">
@@ -122,7 +123,7 @@ export function Catalogue({
             <Search size={16} />
             <Input
               aria-label="Search products"
-              placeholder="Find your next upgrade"
+              placeholder="Search the supply index"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -151,7 +152,7 @@ export function Catalogue({
           </select>
         </div>
       </div>
-      <p className="result-count">{list.length} considered essentials</p>
+      <p className="result-count">{list.length} objects in view</p>
       <div className="product-grid">
         {list.map((p) => (
           <ProductCard key={p.id} product={p} />
@@ -177,81 +178,94 @@ export function Catalogue({
 export function Home({ products }: { products: Product[] }) {
   return (
     <main>
-      <section className="hero">
-        <div className="hero-heading">
-          <div>
-            <span className="eyebrow">
-              <span className="live-dot" />
-              THE WORKSPACE EDIT / VOL. 01
-            </span>
+      <section className="studio-hero">
+        <div className="hero-bar">
+          <span>
+            <ScanLine size={15} /> WORKSPACE SUPPLY / 001
+          </span>
+          <span>TOOLS FOR THE WAY YOU WORK</span>
+        </div>
+        <div className="hero-bento">
+          <div className="hero-statement">
+            <span className="hero-kicker">CLEAR SPACE. SWITCH ON.</span>
             <h1>
-              Make room for
+              Good work
               <br />
-              <em>better work.</em>
+              starts <span>here.</span>
             </h1>
-          </div>
-          <div className="hero-copy">
             <p>
-              Good tools. A clearer desk.
-              <br />A space that feels like you.
-            </p>
-            <a className="dark-link" href="#collection">
-              Explore the edit <ArrowUpRight size={18} />
-            </a>
-          </div>
-        </div>
-        <div className="hero-image">
-          <Image
-            src="/images/hero.jpg"
-            alt="A considered workspace with a laptop and everyday desk tools"
-            fill
-            priority
-            sizes="100vw"
-          />
-          <div className="image-label">
-            <span>01 / A SPACE TO THINK</span>
-            <p>
-              Your next good idea
+              Equip your desk with objects that do more.
               <br />
-              starts here.
+              Practical tools. A setup that’s all yours.
             </p>
+            <a href="#collection" className="hero-cta">
+              Find your tools <ArrowDownRight size={22} />
+            </a>
+            <span className="hero-coordinate">
+              DN — 23.8103° N / EVERYDAY OBJECTS
+            </span>
           </div>
-          <div className="image-stamp">
-            <Plus size={20} />
-            Designed for your everyday.
+          <div className="hero-photo">
+            <Image
+              src="/images/mat.jpg"
+              alt="A keyboard and desk tools arranged in a focused workspace"
+              fill
+              priority
+              sizes="(max-width: 700px) 90vw, 42vw"
+            />
+            <div className="photo-corner">
+              <Command size={24} />
+            </div>
+            <div className="photo-caption">
+              <span>SETUP / 01</span>
+              <strong>
+                Make focus
+                <br />
+                your default.
+              </strong>
+            </div>
           </div>
         </div>
-        <div className="trust-row">
+        <div className="service-strip">
           <span>
-            <Truck size={18} />
-            Delivery across Bangladesh
+            <Truck size={19} />
+            <strong>Delivered to your desk</strong>
+            <small>Across Bangladesh</small>
           </span>
           <span>
-            <PackageCheck size={18} />
-            Pay when it arrives
+            <PackageCheck size={19} />
+            <strong>Keep checkout simple</strong>
+            <small>Pay on delivery</small>
           </span>
           <span>
-            <Heart size={18} />
-            Keep the things you love
+            <Heart size={19} />
+            <strong>Build your shortlist</strong>
+            <small>Save now. Decide later.</small>
           </span>
         </div>
       </section>
       <Catalogue products={products} />
       <section className="manifesto">
-        <span className="eyebrow">LESS, BUT BETTER.</span>
-        <h2>
-          A desk is more than a surface.
-          <br />
-          Make it your kind of space.
-        </h2>
-        <p>
-          We bring together a small edit of everyday essentials.
-          <br />
-          Nothing extra. Just the things that earn their place.
-        </p>
-        <a className="text-link" href="#collection">
-          Find your next essential <ArrowRight size={18} />
-        </a>
+        <div className="manifesto-number">DN/01</div>
+        <div>
+          <span className="eyebrow">FUNCTION FIRST. ALWAYS.</span>
+          <h2>
+            Less searching.
+            <br />
+            More doing.
+          </h2>
+          <p>
+            A focused collection of workspace essentials.
+            <br />
+            Pick the pieces that fit the way you work.
+          </p>
+          <a href="#collection" className="text-link">
+            Back to the supply index <ArrowRight size={18} />
+          </a>
+        </div>
+        <div className="manifesto-symbol">
+          <ScanLine size={140} strokeWidth={0.8} />
+        </div>
       </section>
     </main>
   );

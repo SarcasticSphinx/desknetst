@@ -1,7 +1,12 @@
 import { getDb } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { CircleCheck, ArrowRight, Package, Truck } from "lucide-react";
+import {
+  ClipboardCheck as CircleCheck,
+  ArrowRight,
+  Package,
+  Truck,
+} from "lucide-react";
 import { money } from "@/lib/cart";
 import {
   Table,
@@ -27,11 +32,11 @@ export default async function Page({
   return (
     <main className="receipt page-wrap">
       <CircleCheck className="receipt-check" size={52} strokeWidth={1} />
-      <span className="eyebrow">GOOD CHOICES, CONFIRMED</span>
+      <span className="eyebrow">ORDER CONFIRMED / RECEIPT</span>
       <h1>
-        Your workspace is
+        Your order is
         <br />
-        getting an upgrade.
+        on the list.
       </h1>
       <p>Your demo order has been saved. Keep this page as your receipt.</p>
       <div className="receipt-meta">

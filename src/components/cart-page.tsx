@@ -6,7 +6,7 @@ import {
   Plus,
   Trash2,
   ArrowRight,
-  ShoppingCart,
+  ShoppingBasket as ShoppingCart,
   ArrowLeft,
   LockKeyhole,
 } from "lucide-react";
@@ -17,25 +17,25 @@ import { money, subtotal } from "@/lib/cart";
 export function CartPage() {
   const { cart, change, ready } = useShop();
   return (
-    <main className="page-wrap">
+    <main className="page-wrap basket-page">
       <Link className="back-link" href="/#collection">
         <ArrowLeft size={16} />
         Keep exploring
       </Link>
       <div className="section-heading">
         <div>
-          <span className="eyebrow">YOUR WORKSPACE, COMING TOGETHER</span>
-          <h1>Your cart.</h1>
+          <span className="eyebrow">BASKET / REVIEW YOUR OBJECTS</span>
+          <h1>Ready for your desk?</h1>
         </div>
-        <p>{cart.reduce((n, x) => n + x.quantity, 0)} good choices</p>
+        <p>{cart.reduce((n, x) => n + x.quantity, 0)} items in your basket</p>
       </div>
       {!ready ? (
         <p>Loading your cart…</p>
       ) : !cart.length ? (
         <div className="empty">
           <ShoppingCart size={35} />
-          <h2>A little room for something good.</h2>
-          <p>Your cart is waiting for its first essential.</p>
+          <h2>Your basket is clear.</h2>
+          <p>Find the tools you want to work with.</p>
           <Link className="dark-link" href="/#collection">
             Shop the collection <ArrowRight size={16} />
           </Link>
@@ -93,8 +93,8 @@ export function CartPage() {
           </div>
           <Card className="order-summary">
             <CardContent>
-              <span className="eyebrow">THE SUMMARY</span>
-              <h2>All good things.</h2>
+              <span className="eyebrow">ORDER TOTAL / BDT</span>
+              <h2>The numbers.</h2>
               <div className="summary-row">
                 <span>Subtotal</span>
                 <strong>{money(subtotal(cart))}</strong>
