@@ -3,15 +3,16 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Heart,
+  Bookmark,
   Plus,
   ArrowLeft,
   Truck,
-  PackageCheck,
+  Banknote,
   Check,
+  Expand,
+  ArrowDownRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableRow, TableCell } from "@/components/ui/table";
 import {
   Dialog,
@@ -29,12 +30,21 @@ export function ProductDetail({ product: p }: { product: Product }) {
   const specs =
     p.specs && typeof p.specs === "object" ? Object.entries(p.specs) : [];
   return (
-    <main className="page-wrap">
-      <Link className="back-link" href="/#collection">
-        <ArrowLeft size={16} />
-        Back to the edit
-      </Link>
-      <div className="detail-grid">
+    <main className="page-wrap product-page">
+      <div className="product-topline">
+        <Link className="back-link" href="/#collection">
+          <ArrowLeft size={16} />
+          Supply index
+        </Link>
+        <span className="eyebrow">
+          {p.category} / {p.id.toUpperCase()}
+        </span>
+      </div>
+      <div className="product-heading">
+        <h1>{p.name}</h1>
+        <ArrowDownRight size={42} strokeWidth={1.2} />
+      </div>
+      <div className="product-stage">
         <Dialog>
           <DialogTrigger
             className="detail-image"
@@ -45,10 +55,11 @@ export function ProductDetail({ product: p }: { product: Product }) {
               alt={p.name}
               fill
               priority
-              sizes="(max-width: 800px) 90vw, 50vw"
+              sizes="(max-width: 800px) 90vw, 45vw"
             />
             <span>
-              Take a closer look <Plus size={14} />
+              <Expand size={15} />
+              Expand image
             </span>
           </DialogTrigger>
           <DialogContent className="photo-dialog">
@@ -68,19 +79,20 @@ export function ProductDetail({ product: p }: { product: Product }) {
             </div>
           </DialogContent>
         </Dialog>
-        <section className="detail-copy">
-          <Badge variant="outline">{p.category}</Badge>
-          <h1>{p.name}</h1>
+        <section className="purchase-panel">
+          <span className="eyebrow">CONFIGURE YOUR OBJECT</span>
           <p className="detail-price">{money(variant.price)}</p>
           <p className="description">{p.description}</p>
-          <label className="field-label" htmlFor="option">
-            Make it yours <span>{variant.label}</span>
-          </label>
-          <div className="option-row" id="option">
+          <div className="option-title">
+            <span>01 / Choose your option</span>
+            <strong>{variant.label}</strong>
+          </div>
+          <div className="option-row">
             {p.variants.map((v) => (
               <Button
                 key={v.id}
-                variant={option === v.id ? "default" : "outline"}
+                variant="outline"
+                className={option === v.id ? "option selected" : "option"}
                 onClick={() => setOption(v.id)}
                 aria-pressed={option === v.id}
               >
@@ -90,9 +102,9 @@ export function ProductDetail({ product: p }: { product: Product }) {
             ))}
           </div>
           <p className="stock">
-            <span className="live-dot" />
+            <span className="status-dot" />
             {variant.stock > 0
-              ? `${variant.stock} available for your workspace`
+              ? `${variant.stock} in stock`
               : "Currently unavailable"}
           </p>
           <div className="purchase-row">
@@ -123,36 +135,42 @@ export function ProductDetail({ product: p }: { product: Product }) {
                 saved.includes(p.id) ? "Remove from saved" : "Save product"
               }
             >
-              <Heart fill={saved.includes(p.id) ? "currentColor" : "none"} />
+              <Bookmark fill={saved.includes(p.id) ? "currentColor" : "none"} />
             </Button>
           </div>
           <div className="delivery-note">
             <span>
               <Truck size={18} />
-              Standard ৳60 · Express ৳120
+              Delivery from ৳60
             </span>
             <span>
-              <PackageCheck size={18} />
-              Cash on delivery
+              <Banknote size={18} />
+              Pay on arrival
             </span>
           </div>
-          <h2 className="spec-heading">The details, considered.</h2>
-          <Table>
-            <TableBody>
-              {specs.map(([k, v]) => (
-                <TableRow key={k}>
-                  <TableCell>{k}</TableCell>
-                  <TableCell>{String(v)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        </section>
+      </div>
+      <section className="spec-section">
+        <div>
+          <span className="eyebrow">OBJECT NOTES / 02</span>
+          <h2>The useful details.</h2>
+          <p>The specifications for your next desk upgrade.</p>
           <p className="fine-print">
             Sample catalogue specifications. Photograph is illustrative;
             selected options may not be pictured.
           </p>
-        </section>
-      </div>
+        </div>
+        <Table>
+          <TableBody>
+            {specs.map(([k, v]) => (
+              <TableRow key={k}>
+                <TableCell>{k}</TableCell>
+                <TableCell>{String(v)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </section>
     </main>
   );
 }

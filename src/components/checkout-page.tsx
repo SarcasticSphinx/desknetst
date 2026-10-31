@@ -6,7 +6,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Truck,
-  PackageCheck,
+  Banknote as PackageCheck,
   LoaderCircle,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -54,15 +54,15 @@ export function CheckoutPage() {
     }
   }
   return (
-    <main className="page-wrap">
+    <main className="page-wrap checkout-page">
       <Link className="back-link" href="/cart">
         <ArrowLeft size={16} />
         Back to cart
       </Link>
       <div className="section-heading">
         <div>
-          <span className="eyebrow">ONE LAST LITTLE STEP</span>
-          <h1>Make it yours.</h1>
+          <span className="eyebrow">CHECKOUT / DELIVERY DETAILS</span>
+          <h1>Next stop: your desk.</h1>
         </div>
         <p>Guest checkout · Cash on delivery</p>
       </div>
@@ -78,7 +78,7 @@ export function CheckoutPage() {
       ) : (
         <div className="cart-layout">
           <form onSubmit={submit} className="checkout-form">
-            <h2>Where should it go?</h2>
+            <h2>01 / Your details</h2>
             <label htmlFor="customer">Full name</label>
             <Input
               id="customer"
@@ -110,7 +110,7 @@ export function CheckoutPage() {
               maxLength={300}
               autoComplete="street-address"
             />
-            <h2>Choose your pace.</h2>
+            <h2>02 / Delivery method</h2>
             <div className="delivery-options">
               {(
                 [
@@ -173,8 +173,8 @@ export function CheckoutPage() {
           </form>
           <Card className="order-summary">
             <CardContent>
-              <span className="eyebrow">YOUR EDIT</span>
-              <h2>Almost on your desk.</h2>
+              <span className="eyebrow">YOUR ORDER</span>
+              <h2>Order breakdown.</h2>
               {cart.map((x) => (
                 <div className="checkout-line" key={x.variantId}>
                   <span>
