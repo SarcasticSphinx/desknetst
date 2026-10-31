@@ -54,8 +54,18 @@ describe("checkout", () => {
     expect(() => parseCheckout({ ...request, delivery: "drone" })).toThrow());
   it("uses server prices through a mocked store", async () => {
     const store = mockStore();
-    expect(await placeOrder(request, store)).toEqual({ token: "receipt" });
-    expect(store.transaction).toHaveBeenCalledOnce();
+    const save = vi.fn().mockResolvedValue({ token: "receipt" });
+    store.transaction = async (fn) => fn({
+      findVariant: async () => variant,
+      reserve: async () => true,
+      save,
+    });
+    expect(await placeOrder({ ...request, price: 1 }, store))
+      .toEqual({ token: "receipt" });
+    expect(save).toHaveBeenCalledWith(expect.objectContaining({
+      subtotal: 20000, shipping: 6000, total: 26000,
+      items: [expect.objectContaining({ unitPrice: 10000, quantity: 2 })],
+    }));
   });
   it("returns a previous receipt on retry", async () => {
     const store = mockStore();
