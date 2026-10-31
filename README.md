@@ -22,4 +22,5 @@ npm run build
 Product photos are illustrative stock photographs. Options, prices and specifications form a student demonstration catalogue. No real payment is collected. Guest checkout stores orders in the configured database.
 
 ## Delivery
+Standard delivery costs BDT 60.
 Express delivery costs BDT 120.
